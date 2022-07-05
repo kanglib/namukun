@@ -8,14 +8,16 @@ new MutationObserver(function(mutations) {
 function cut_namu() {
     chrome.storage.sync.get("add_link_title", data => {
         if (data.add_link_title === true) {
-            let li = document.body.getElementsByClassName("wiki-link-internal");
+            let li = document.body.querySelectorAll("a[href^='/w/']");
             for (let b of li) {
                 if (b.getAttribute("rel") === "nofollow" ||
                     b.textContent == "???" ||
                     (b.childElementCount >= 1 &&
-                        b.children[0].className.indexOf("image") != -1))
+                        b.children[0].className.indexOf("image") != -1) ||
+                    b.getElementsByTagName("img").length > 0)
                     continue;
-                if (b.getAttribute("title").indexOf(b.textContent) == -1 &&
+                if (b.getAttribute("title") &&
+                    b.getAttribute("title").indexOf(b.textContent) == -1 &&
                     b.textContent.indexOf(b.getAttribute("title")) == -1) {
                     b.textContent =
                         b.textContent + "(" + b.getAttribute("title") + ")";
