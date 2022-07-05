@@ -1,7 +1,7 @@
 new MutationObserver(function(mutations) {
         cut_namu();
     })
-    .observe(document.querySelector("title"), {
+    .observe(document.head, {
         childList: true
     });
 
@@ -53,8 +53,9 @@ function cut_namu() {
 
     chrome.storage.sync.get("delete_sidebar", data => {
         if (data.delete_sidebar === true) {
-            for (let a of document.body.getElementsByTagName("aside"))
-                a.remove();
+            var a = document.body.querySelectorAll("a[href='/RecentChanges']");
+            if (a.length > 0)
+                a[1].parentNode.parentNode.remove();
         }
     });
 }
