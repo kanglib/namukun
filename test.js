@@ -34,7 +34,7 @@ function cut_namu() {
             while ((n = walk.nextNode()))
                 a.push(n);
             for (let b of a) {
-                b.nodeValue = b.nodeValue.replace(/\(\.+\)/gi, "");
+                b.nodeValue = b.nodeValue.replace(/\([\.…]+\)/gi, "");
                 b.nodeValue = b.nodeValue.replace(/\([?!]+\)/gi, "");
             }
         }
